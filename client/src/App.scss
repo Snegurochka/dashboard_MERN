@@ -1,0 +1,10 @@
+$base-color: #c6538c;
+$primary-color: #80ceca;
+
+.wrapper {
+  display: flex;
+
+  .container {
+    flex: 6;
+  }
+}
