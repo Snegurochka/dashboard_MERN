@@ -1,22 +1,17 @@
-import { Link } from "react-router-dom";
+import { StyledBox, StyledLink } from "./Sidebar.styles";
 
-import "./Sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import StoreIcon from "@mui/icons-material/Store";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import {
-  Box,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   ListSubheader,
 } from "@mui/material";
-import { StyledBox, StyledLink } from "./Sidebar.styles";
-
 
 const Sidebar = () => {
   return (
@@ -27,9 +22,7 @@ const Sidebar = () => {
         display: { xs: "none", sm: "block" },
       }}
     >
-      <div className="top">
-        <StyledLink to="/">Dashboard</StyledLink>
-      </div>
+      <StyledLink to="/">MERN Dashboard</StyledLink>
       <hr />
       <List
         component="nav"

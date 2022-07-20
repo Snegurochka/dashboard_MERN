@@ -1,3 +1,4 @@
+import { Container, Grid } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Navbar from "./components/Layout/Navbar/Navbar";
@@ -9,9 +10,9 @@ import Login from "./page/Login/Login";
 function App() {
   return (
     <BrowserRouter>
-      <div className="wrapper">
+      <Grid container>
         <Sidebar />
-        <div className="container">
+        <Grid item xs={12} md={10}>
           <Navbar />
 
           <Routes>
@@ -22,8 +23,8 @@ function App() {
               <Route index element={<List />} />
             </Route>
           </Routes>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </BrowserRouter>
   );
 }
