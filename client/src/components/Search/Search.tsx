@@ -1,12 +1,21 @@
 import "./Search.scss";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { InputAdornment, TextField } from "@mui/material";
 
 const Search = () => {
   return (
-    <div className="search">
-      <input type="text" placeholder="Search..." />
-      <SearchOutlinedIcon />
-    </div>
+    <TextField
+      type="text"
+      label="Search..."
+      size="small"
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <SearchOutlinedIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 
