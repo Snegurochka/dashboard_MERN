@@ -1,4 +1,3 @@
-import "./Search.scss";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { InputAdornment, TextField } from "@mui/material";
 
