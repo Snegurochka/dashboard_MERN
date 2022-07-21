@@ -1,9 +1,9 @@
 import { GraphQLList } from "graphql";
 import Client from "../../models/Client";
-import { ProjectType } from "../types/project";
+import { ClientType } from "../types/client";
 
 const clients = {
-  type: new GraphQLList(ProjectType),
+  type: new GraphQLList(ClientType),
   resolve: (parent:any, args:any) => {
     return Client.find();
   },
