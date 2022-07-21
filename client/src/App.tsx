@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 import { Grid } from "@mui/material";
-import './global.scss';
+import "./global.scss";
 
 // Components
 import Navbar from "./components/Layout/Navbar/Navbar";
@@ -11,6 +11,7 @@ import Home from "./page/Home/Home";
 import Login from "./page/Login/Login";
 import ProjectsList from "./page/ProjectsList/ProjectsList";
 import ClientsList from "./page/ClientsList/ClientsList";
+import ClientAdd from "./page/ClientAdd/ClientAdd";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -51,6 +52,7 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="clients">
                 <Route index element={<ClientsList />} />
+                <Route path="add" element={<ClientAdd />} />
               </Route>
               <Route path="projects">
                 <Route index element={<ProjectsList />} />

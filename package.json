@@ -5,6 +5,7 @@
   "main": "server/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node server/app.ts",
     "start:dev": "nodemon --exec ts-node server/app.ts"
   },
   "keywords": [],
