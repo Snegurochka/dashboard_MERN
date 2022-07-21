@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 import { Grid } from "@mui/material";
+import './global.scss';
 
 // Components
 import Navbar from "./components/Layout/Navbar/Navbar";
