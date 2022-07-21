@@ -24,13 +24,14 @@ const ProjectsList: FC = () => {
   if (!data) return <p>No projects</p>;
 
   return (
-    <DataGrid
-      rows={data.projects}
-      columns={columns}
-      pageSize={5}
-      rowsPerPageOptions={[5]}
-      checkboxSelection
-    />
+    <p>ok</p>
+    // <DataGrid
+    //   rows={data.projects}
+    //   columns={columns}
+    //   pageSize={5}
+    //   rowsPerPageOptions={[5]}
+    //   checkboxSelection
+    // />
   );
 };
 

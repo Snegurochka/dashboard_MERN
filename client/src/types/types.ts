@@ -4,3 +4,8 @@ export type ProjectType = {
   description: string;
   status: string;
 };
+
+export type ClientType = {
+  name: string;
+
+};
