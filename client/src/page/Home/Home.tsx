@@ -25,8 +25,8 @@ const widjets_data = [
 const Home = () => {
   return (
     <Grid container p={2}>
-      {widjets_data.map((item) => (
-        <Grid item xs={4}>
+      {widjets_data.map((item, ind) => (
+        <Grid key={ind} item xs={4}>
           <Widget title={item.title} />
         </Grid>
       ))}

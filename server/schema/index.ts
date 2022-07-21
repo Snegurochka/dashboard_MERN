@@ -3,6 +3,6 @@ import mutation from './mutation';
 import query from './query';
 
 export default new GraphQLSchema({
-  mutation,
+  // mutation,
   query,
 });
