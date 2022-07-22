@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { ProjectsAPIType } from "../../types/APITypes";
 import { GET_PROJECTS } from "../../queries/projectQueries";
 import { Link } from "react-router-dom";
+import ListComponent from "../../components/Layout/ListComponent/ListComponent";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 170 },
@@ -17,7 +18,7 @@ const columns: GridColDef[] = [
     renderCell: (params) => (
       <span
         className={`list_status ${
-          params.row.status == "Completed" ? "completed" : ""
+          params.row.status === "Completed" ? "completed" : ""
         }`}
       >
         {params.row.status}
@@ -28,10 +29,6 @@ const columns: GridColDef[] = [
 
 const ProjectsList: FC = () => {
   const { loading, error, data } = useQuery<ProjectsAPIType>(GET_PROJECTS);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Eror</p>;
-  if (!data) return <p>No projects</p>;
 
   const actionColumn = [
     {
@@ -52,12 +49,12 @@ const ProjectsList: FC = () => {
   ];
 
   return (
-    <DataGrid
-      rows={data.projects}
+    <ListComponent
+      title="Projects list"
+      loading={loading}
+      error={error}
+      data={data?.projects}
       columns={columns.concat(actionColumn)}
-      pageSize={5}
-      rowsPerPageOptions={[5]}
-      checkboxSelection
     />
   );
 };
