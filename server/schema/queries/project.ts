@@ -1,11 +1,10 @@
 import { GraphQLID, GraphQLNonNull } from "graphql";
+import Project from "../../models/Project";
 import { ProjectType } from "../types/project";
 
 type ProjectAPIType = {
   id: number;
 };
-
-const products = [] as ProjectAPIType[];
 
 const project = {
   type: ProjectType,
@@ -15,9 +14,7 @@ const project = {
     },
   },
   resolve: (_: string, { id }: ProjectAPIType) => {
-    return products.filter((product) => {
-      product.id === id;
-    });
+    return Project.findById(id);
   },
 };
 

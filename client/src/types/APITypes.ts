@@ -7,3 +7,7 @@ export type ProjectsAPIType = {
 export type ClientsAPIType = {
     clients: ClientType[]
 }
+
+export type ProjectAPIType = {
+    project: ProjectType
+}
