@@ -1,12 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-
-import { Grid } from "@mui/material";
-import "./global.scss";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./utils/apollo";
 
 // Components
-import Navbar from "./components/Layout/Navbar/Navbar";
-import Sidebar from "./components/Layout/Sidebar/Sidebar";
 import Home from "./page/Home/Home";
 import Login from "./page/Login/Login";
 import ProjectsList from "./page/ProjectsList/ProjectsList";
@@ -14,56 +10,28 @@ import ClientsList from "./page/ClientsList/ClientsList";
 import ClientAdd from "./page/ClientAdd/ClientAdd";
 import ProjectAdd from "./page/ProjectAdd/ProjectAdd";
 import ProjectDetails from "./page/ProjectDetails/ProjectDetails";
-
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        clients: {
-          merge(existing, incoming) {
-            return incoming;
-          },
-        },
-        projects: {
-          merge(existing, incoming) {
-            return incoming;
-          },
-        },
-      },
-    },
-  },
-});
-
-const client = new ApolloClient({
-  uri: "http://localhost:5000/graphql",
-  cache,
-});
+import Layout from "./components/Layout/Layout";
 
 function App() {
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <Grid container>
-          <Sidebar />
-          <Grid item xs={12} md={10}>
-            <Navbar />
-
-            <Routes>
-              <Route path="/" />
-              <Route index element={<Home />} />
-              <Route path="login" element={<Login />} />
-              <Route path="clients">
-                <Route index element={<ClientsList />} />
-                <Route path="add" element={<ClientAdd />} />
-              </Route>
-              <Route path="projects">
-                <Route index element={<ProjectsList />} />
-                <Route path=":id" element={<ProjectDetails />} />
-                <Route path="add" element={<ProjectAdd />} />
-              </Route>
-            </Routes>
-          </Grid>
-        </Grid>
+        <Layout>
+          <Routes>
+            <Route path="/" />
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="clients">
+              <Route index element={<ClientsList />} />
+              <Route path="add" element={<ClientAdd />} />
+            </Route>
+            <Route path="projects">
+              <Route index element={<ProjectsList />} />
+              <Route path=":id" element={<ProjectDetails />} />
+              <Route path="add" element={<ProjectAdd />} />
+            </Route>
+          </Routes>
+        </Layout>
       </BrowserRouter>
     </ApolloProvider>
   );
