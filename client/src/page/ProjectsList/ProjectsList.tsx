@@ -1,16 +1,28 @@
 import { FC } from "react";
-
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ProjectsAPIType } from "../../types/APITypes";
 import { GET_PROJECTS } from "../../queries/projectQueries";
-import { Link } from "react-router-dom";
+
+// Components
 import ListComponent from "../../components/Layout/ListComponent/ListComponent";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 170 },
-  { field: "namee", headerName: "Name", width: 170 },
+  { field: "id", headerName: "ID", width: 230 },
+  { field: "name", headerName: "Name", width: 170 },
   { field: "description", headerName: "Description", width: 230 },
+  {
+    field: "client",
+    headerName: "Client",
+    width: 170,
+    renderCell: (params) => (
+      <Link to={`/clients/${params.row.client.id}`}>
+        {params.row.client.name}
+      </Link>
+    ),
+  },
   {
     field: "status",
     headerName: "Status",
@@ -37,7 +49,7 @@ const ProjectsList: FC = () => {
       width: 200,
       renderCell: (params: GridRenderCellParams) => (
         <div className="cell_action">
-          <Link to="/projects/test">
+          <Link to={params.row.id}>
             <div className="viewButton">View</div>
           </Link>
           <div className="deleteButton" onClick={() => {}}>

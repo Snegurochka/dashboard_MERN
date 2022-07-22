@@ -12,6 +12,8 @@ import Login from "./page/Login/Login";
 import ProjectsList from "./page/ProjectsList/ProjectsList";
 import ClientsList from "./page/ClientsList/ClientsList";
 import ClientAdd from "./page/ClientAdd/ClientAdd";
+import ProjectAdd from "./page/ProjectAdd/ProjectAdd";
+import ProjectDetails from "./page/ProjectDetails/ProjectDetails";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -56,6 +58,8 @@ function App() {
               </Route>
               <Route path="projects">
                 <Route index element={<ProjectsList />} />
+                <Route path=":id" element={<ProjectDetails />} />
+                <Route path="add" element={<ProjectAdd />} />
               </Route>
             </Routes>
           </Grid>
