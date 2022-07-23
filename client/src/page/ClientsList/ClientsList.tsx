@@ -1,11 +1,14 @@
-import { useQuery } from "@apollo/client";
-import { Box } from "@mui/system";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { ApolloCache, useMutation, useQuery } from "@apollo/client";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { GET_CLIENTS } from "../../queries/clientQueries";
 import { ClientsAPIType } from "../../types/APITypes";
-import { StyledBox, StyledListHeader } from "./Client.styles";
+
+// Components
+import ListComponent from "../../components/Layout/ListComponent/ListComponent";
+import { Link } from "react-router-dom";
+import { DELETE_CLIENT } from "../../mutations/clientMutations";
+import ActionColumn from "../../components/ActionColumn/ActionColumn";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 170 },
@@ -17,25 +20,41 @@ const columns: GridColDef[] = [
 const ClientsList: FC = () => {
   const { loading, error, data } = useQuery<ClientsAPIType>(GET_CLIENTS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Eror</p>;
-  if (!data) return <p>No clients</p>;
+  function updateCache(cache: ApolloCache<ClientsAPIType>, id: string) {
+    const { clients } = cache.readQuery({
+      query: GET_CLIENTS,
+    }) as ClientsAPIType;
+    cache.writeQuery({
+      query: GET_CLIENTS,
+      data: {
+        clients: clients.filter((client) => client.id !== id),
+      },
+    });
+  }
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params: GridRenderCellParams) => (
+        <ActionColumn
+          id={params.row.id}
+          mutation={DELETE_CLIENT}
+          updateCache={updateCache}
+        />
+      ),
+    },
+  ];
 
   return (
-    <StyledBox>
-      <StyledListHeader>
-        <h2>Clients list</h2>
-        <Link to="add">Add New</Link>
-      </StyledListHeader>
-
-      <DataGrid
-        rows={data.clients}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
-    </StyledBox>
+    <ListComponent
+      title="Clients list"
+      loading={loading}
+      error={error}
+      data={data?.clients}
+      columns={columns.concat(actionColumn)}
+    />
   );
 };
 
