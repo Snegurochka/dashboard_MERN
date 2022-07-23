@@ -1,6 +1,14 @@
-import { ChangeEvent, FC, useState } from "react";
-import { Button, Grid, TextField } from "@mui/material";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { ADD_CLIENT } from "../../../mutations/clientMutations";
+import { GET_CLIENTS } from "../../../queries/clientQueries";
+import { ClientsAPIType } from "../../../types/APITypes";
+
 import { AvatarWrapper, FormWrapper } from "./ClientAddForm.styles";
+import { AppRoutes } from "../../../routes";
+
+import { Button, Grid, IconButton, TextField } from "@mui/material";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 
 const formFields = {
@@ -14,10 +22,33 @@ const ClientAddForm: FC = () => {
   const [fields, setFields] = useState(formFields);
   const { name, email, phone } = fields;
 
+  const navigate = useNavigate();
+
+  const [addClient, { data }] = useMutation(ADD_CLIENT, {
+    variables: { name, email, phone },
+    update(cache, { data: { addClient } }) {
+      const { clients } = cache.readQuery({ query: GET_CLIENTS }) as ClientsAPIType;
+
+      cache.writeQuery({
+        query: GET_CLIENTS,
+        data: { clients: [...clients, addClient] },
+      });
+    },
+  });
+
+  if (data) {
+    navigate(`/${AppRoutes.CLIENTS}`);
+  }
+
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setFields({ ...fields, [name]: value });
+  };
+
+  const submitHandler = (e: FormEvent) => {
+    e.preventDefault();
+    addClient();
   };
 
   return (
@@ -32,21 +63,23 @@ const ClientAddForm: FC = () => {
             }
             alt=""
           />
-          <div>
-            <label htmlFor="file">
-              Image: <DriveFolderUploadOutlinedIcon />
-            </label>
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="label"
+          >
             <input
-              type="file"
-              id="file"
+              hidden
+              accept="image/*"
               onChange={(e) => {
                 if (e.target?.files) {
                   setFile(e.target.files[0]);
                 }
               }}
-              style={{ display: "none" }}
+              type="file"
             />
-          </div>
+            <DriveFolderUploadOutlinedIcon />
+          </IconButton>
         </AvatarWrapper>
         <FormWrapper>
           <TextField
@@ -75,7 +108,9 @@ const ClientAddForm: FC = () => {
           />
         </FormWrapper>
       </Grid>
-      <Button variant="contained">Send</Button>
+      <Button variant="contained" onClick={submitHandler}>
+        Send
+      </Button>
     </form>
   );
 };
