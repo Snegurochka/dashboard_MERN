@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./utils/apollo";
+import { AppRoutes } from "./routes";
 
 // Components
 import Home from "./page/Home/Home";
@@ -18,17 +19,17 @@ function App() {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" />
+            <Route path={AppRoutes.HOME} />
             <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="clients">
+            <Route path={AppRoutes.LPGIN} element={<Login />} />
+            <Route path={AppRoutes.CLIENTS}>
               <Route index element={<ClientsList />} />
-              <Route path="add" element={<ClientAdd />} />
+              <Route path={AppRoutes.ADD} element={<ClientAdd />} />
             </Route>
-            <Route path="projects">
+            <Route path={AppRoutes.PROJECTS}>
               <Route index element={<ProjectsList />} />
               <Route path=":id" element={<ProjectDetails />} />
-              <Route path="add" element={<ProjectAdd />} />
+              <Route path={AppRoutes.ADD} element={<ProjectAdd />} />
             </Route>
           </Routes>
         </Layout>
