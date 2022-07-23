@@ -1,10 +1,11 @@
 import { GraphQLObjectType } from "graphql";
-import { addClient } from "./mutations/clients";
+import { addClient, deleteClient } from "./mutations/clients";
 
 const mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: ():any => ({
     addClient,
+    deleteClient
   }),
 });
 

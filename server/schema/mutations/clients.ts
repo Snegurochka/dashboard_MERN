@@ -1,4 +1,4 @@
-import { GraphQLNonNull, GraphQLString } from "graphql";
+import { GraphQLID, GraphQLNonNull, GraphQLString } from "graphql";
 import Client from "../../models/Client";
 import { ClientType } from "../types/client";
 
@@ -6,6 +6,10 @@ type ClientAPIType = {
   name: string;
   email: string;
   phone: string;
+};
+
+type ClientDelAPIType = {
+  id: number;
 };
 
 export const addClient = {
@@ -23,5 +27,15 @@ export const addClient = {
     });
 
     return client.save();
+  },
+};
+
+export const deleteClient = {
+  type: ClientType,
+  args: {
+    id: { type: GraphQLNonNull(GraphQLID) },
+  },
+  resolve(_: string, { id }: ClientDelAPIType) {
+    return Client.findByIdAndRemove(id);
   },
 };
